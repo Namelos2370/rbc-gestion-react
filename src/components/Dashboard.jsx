@@ -232,8 +232,8 @@ export default function Dashboard() {
     { label: 'Factures validées', valeur: stats.validees },
     { label: 'Lots de proformas', valeur: stats.lots },
     { label: "Total d'aujourd'hui", valeur: formatMontant(stats.totalJour) },
-    // Le total du mois n'est pas visible par les employés
-    ...(user?.role === 'employe' ? [] : [{ label: 'Total du mois', valeur: formatMontant(stats.totalMois) }]),
+    // Le total du mois est réservé au super administrateur
+    ...(user?.role === 'super_admin' ? [{ label: 'Total du mois', valeur: formatMontant(stats.totalMois) }] : []),
   ];
 
   return (
