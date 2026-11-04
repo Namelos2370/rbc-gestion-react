@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: ['apple-touch-icon.png'],
       manifest: {
         name: 'RBC Gestion',
         short_name: 'RBC',
@@ -19,9 +19,15 @@ export default defineConfig({
         start_url: '/',
         icons: [
           {
-            src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect fill="%232563eb" width="192" height="192"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="white" font-size="80" font-weight="bold" font-family="Arial">RBC</text></svg>',
+            src: '/icon-192.png',
             sizes: '192x192',
-            type: 'image/svg+xml',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/icon-512.png',
+            sizes: '512x512',
+            type: 'image/png',
             purpose: 'any'
           }
         ]
