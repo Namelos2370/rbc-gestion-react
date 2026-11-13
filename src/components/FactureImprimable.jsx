@@ -1,4 +1,3 @@
-import logoRbc from '../assets/logo-rbc.jpeg';
 import { montantEnLettres } from '../utils/montantEnLettres';
 import { numeroFacture } from '../utils/format';
 
@@ -21,87 +20,62 @@ export default function FactureImprimable({ facture, lignes: lignesRecues, entre
   const enTete = { fontFamily: "'Segoe UI', system-ui, sans-serif" };
 
   return (
-    <div style={{ width: 794, height: 1123, boxSizing: 'border-box', padding: '40px 52px', display: 'flex', flexDirection: 'column', background: '#fff', color: '#111827', fontFamily: "'Times New Roman', Georgia, serif" }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24 }}>
-        <img src={logoRbc} alt="Logo" style={{ width: 170, height: 170, objectFit: 'contain' }} />
-        <div style={{ ...enTete, textAlign: 'right', fontSize: 13, color: '#374151', lineHeight: 1.6, paddingTop: 12 }}>
-          <div style={{ fontSize: 18, fontWeight: 700, color: '#0d47a1' }}>{entreprise.company_name}</div>
-          {entreprise.company_address && <div>{entreprise.company_address}</div>}
-          {entreprise.company_phone && <div>Tél : {entreprise.company_phone}</div>}
-          {entreprise.company_email && <div>Email : {entreprise.company_email}</div>}
-        </div>
+    <div style={{ width: 794, boxSizing: 'border-box', padding: '20px 44px 24px', display: 'flex', flexDirection: 'column', background: '#fff', color: '#111827', fontFamily: "'Times New Roman', Georgia, serif", lineHeight: 1.2 }}>
+      {/* En-tête du papier à en-tête, avec le numéro de contribuable et la boîte postale juste en dessous */}
+      <img src="/entete-rbc.jpg" alt="Rodrigue'z Business Center" style={{ width: '100%', display: 'block' }} />
+      <div style={{ ...enTete, textAlign: 'center', fontSize: 12, color: '#111827', marginTop: 6 }}>
+        BP : 8718 Yaoundé 14 &nbsp;·&nbsp; N° Cont. P038200491062U
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 18, fontSize: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 12, fontSize: 14 }}>
         {ville}, le <span style={{ marginLeft: 6, fontWeight: 600 }}>{dateFacture(facture.created_at)}</span>
       </div>
 
-      <h1 style={{ margin: '22px 0 0', textAlign: 'center', fontSize: 24, textDecoration: 'underline', letterSpacing: 1 }}>
+      <h1 style={{ margin: '12px 0 0', textAlign: 'center', fontSize: 19, textDecoration: 'underline', letterSpacing: 1 }}>
         {titre} N° {numeroFacture(facture)}
       </h1>
 
-      <div style={{ marginTop: 26, fontSize: 17 }}>
+      <div style={{ marginTop: 12, fontSize: 14 }}>
         <span style={{ fontWeight: 700, textDecoration: 'underline' }}>Doit :</span>
         <span style={{ marginLeft: 8, fontWeight: 700 }}>{facture.client}</span>
         {facture.client_phone && (
-          <div style={{ marginLeft: 8, fontSize: 15, marginTop: 4 }}>Tél. : {facture.client_phone}</div>
+          <div style={{ marginLeft: 8, fontSize: 13, marginTop: 2 }}>Tél. : {facture.client_phone}</div>
         )}
       </div>
 
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 22, fontSize: 16 }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 12, fontSize: 13 }}>
         <thead>
           <tr style={{ background: '#1e6fd9', color: '#fff' }}>
-            <th style={{ ...enTete, border: '1px solid #1e6fd9', padding: '10px 12px', textAlign: 'left', fontSize: 15 }}>DÉSIGNATION</th>
-            <th style={{ ...enTete, border: '1px solid #1e6fd9', padding: '10px 12px', width: 80, textAlign: 'center', fontSize: 15 }}>QTÉ</th>
-            <th style={{ ...enTete, border: '1px solid #1e6fd9', padding: '10px 12px', width: 120, textAlign: 'right', fontSize: 15 }}>P.U</th>
-            <th style={{ ...enTete, border: '1px solid #1e6fd9', padding: '10px 12px', width: 130, textAlign: 'right', fontSize: 15 }}>P.T</th>
+            <th style={{ ...enTete, border: '1px solid #1e6fd9', padding: '4px 8px', textAlign: 'center', fontSize: 12 }}>DÉSIGNATION</th>
+            <th style={{ ...enTete, border: '1px solid #1e6fd9', padding: '4px 8px', width: 70, textAlign: 'center', fontSize: 12 }}>QTÉ</th>
+            <th style={{ ...enTete, border: '1px solid #1e6fd9', padding: '4px 8px', width: 110, textAlign: 'center', fontSize: 12 }}>P.U</th>
+            <th style={{ ...enTete, border: '1px solid #1e6fd9', padding: '4px 8px', width: 120, textAlign: 'center', fontSize: 12 }}>P.T</th>
           </tr>
         </thead>
         <tbody>
           {lignesAffichees.map((l, i) => (
             <tr key={i}>
-              <td style={{ border: '1px solid #9ca3af', padding: '12px', height: 34 }}>{l?.designation || ''}</td>
-              <td style={{ border: '1px solid #9ca3af', padding: 12, textAlign: 'center' }}>{l ? l.quantity : ''}</td>
-              <td style={{ border: '1px solid #9ca3af', padding: 12, textAlign: 'right' }}>{l ? fmt(l.unit_price) : ''}</td>
-              <td style={{ border: '1px solid #9ca3af', padding: 12, textAlign: 'right' }}>
+              <td style={{ border: '1px solid #9ca3af', padding: '3px 8px', textAlign: 'center' }}>{l?.designation || ''}</td>
+              <td style={{ border: '1px solid #9ca3af', padding: '3px 8px', textAlign: 'center' }}>{l ? l.quantity : ''}</td>
+              <td style={{ border: '1px solid #9ca3af', padding: '3px 8px', textAlign: 'center' }}>{l ? fmt(l.unit_price) : ''}</td>
+              <td style={{ border: '1px solid #9ca3af', padding: '3px 8px', textAlign: 'center' }}>
                 {l ? fmt(l.total_price ?? Number(l.quantity) * Number(l.unit_price)) : ''}
               </td>
             </tr>
           ))}
           <tr style={{ background: '#dbeafe', fontWeight: 700 }}>
-            <td colSpan={3} style={{ ...enTete, border: '1px solid #1e6fd9', padding: 12, textAlign: 'center' }}>TOTAL</td>
-            <td style={{ border: '1px solid #1e6fd9', padding: 12, textAlign: 'right' }}>{fmt(total)}</td>
+            <td colSpan={3} style={{ ...enTete, border: '1px solid #1e6fd9', padding: '3px 8px', textAlign: 'center' }}>TOTAL</td>
+            <td style={{ border: '1px solid #1e6fd9', padding: '3px 8px', textAlign: 'center' }}>{fmt(total)}</td>
           </tr>
         </tbody>
       </table>
 
-      <p style={{ margin: '22px 0 0', fontSize: 16, lineHeight: 1.5 }}>
+      <p style={{ margin: '10px 0 0', fontSize: 13, lineHeight: 1.3 }}>
         Arrêté la présente facture à la somme de :{' '}
         <span style={{ fontWeight: 700 }}>{montantEnLettres(total)} francs CFA.</span>
       </p>
 
-      <div style={{ marginTop: 'auto', display: 'flex', justifyContent: avecSignatureClient ? 'space-between' : 'flex-end', gap: 24 }}>
-        {avecSignatureClient && (
-          <div style={{ width: 260, textAlign: 'center' }}>
-            <div style={{ fontSize: 17, fontWeight: 700, textDecoration: 'underline' }}>Le client</div>
-            <div style={{ height: 120, borderBottom: '1px dashed #9ca3af', marginTop: 8 }} />
-            <p style={{ margin: '6px 0 0', ...enTete, fontSize: 11, color: '#6b7280' }}>Lu et approuvé, signature</p>
-          </div>
-        )}
-        <div style={{ width: 260, textAlign: 'center' }}>
-          <div style={{ fontSize: 17, fontWeight: 700, textDecoration: 'underline' }}>
-            {entreprise.company_director || 'La Direction'}
-          </div>
-          <div style={{ height: 120, borderBottom: '1px dashed #9ca3af', marginTop: 8 }} />
-          <p style={{ margin: '6px 0 0', ...enTete, fontSize: 11, color: '#6b7280' }}>Cachet et signature</p>
-        </div>
-      </div>
 
-      {entreprise.company_footer && (
-        <footer style={{ marginTop: 20, borderTop: '2px solid #1e6fd9', paddingTop: 8, textAlign: 'center', ...enTete, fontSize: 12, color: '#374151' }}>
-          {entreprise.company_footer}
-        </footer>
-      )}
     </div>
   );
 }
